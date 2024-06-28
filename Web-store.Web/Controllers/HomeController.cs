@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
+using System.Web;
 using Web_store.Web.Models;
 
 namespace Web_store.Web.Controllers
@@ -41,8 +42,10 @@ namespace Web_store.Web.Controllers
 
             
             var passwordEncrypted = CreateMD5(loginViewModel.Password);
+            var encodedLogin = HttpUtility.UrlEncode(loginViewModel.Email);
             HttpClient client = new HttpClient();
-            Uri UrlReq = new Uri(domainAPI + "/api/User/"+ loginViewModel.Email+"/"+ passwordEncrypted);
+
+            Uri UrlReq = new Uri(domainAPI + "/api/User/"+ encodedLogin+"/"+ passwordEncrypted);
 
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json")
@@ -105,7 +108,7 @@ namespace Web_store.Web.Controllers
         public IActionResult SignUp(SignUpViewModel signUpViewModel)
         {
             HttpClient client = new HttpClient();
-            Uri UrlReq = new Uri(domainAPI + "/api/User");
+            Uri UrlReq = new Uri(domainAPI + "/api/Users");
 
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json")
@@ -120,14 +123,15 @@ namespace Web_store.Web.Controllers
             //public int AccountTypeId { get; set; }
             string passwordEncrypted = CreateMD5(signUpViewModel.Password);
 
-        var content = new StringContent("{ 'FirstName': '"+signUpViewModel.FirstName+ "', " +
-            "'LastName': '" + signUpViewModel.LastName + "'," +
-            "'NickName': '" + signUpViewModel.NickName + "'," +
-            "'Email': '" + signUpViewModel.Email + "'," +
-            "'Password': '" + passwordEncrypted + "', " +
-            "'DateBirth': '" + signUpViewModel.DateBirth.ToString() + "'," +
-            "'Document': '" + signUpViewModel.Document + "'," +
-            "'AccountTypeId': 1 }",
+            string bodyContent = "{ \"FirstName\": \"" + signUpViewModel.FirstName + "\", " +
+                "\"LastName\": \"" + signUpViewModel.LastName + "\"," +
+                "\"NickName\": \"" + signUpViewModel.NickName + "\"," +
+                "\"Email\": \"" + signUpViewModel.Email + "\"," +
+                "\"Password\": \"" + passwordEncrypted + "\", " +
+                "\"DateBirth\": \"" + signUpViewModel.DateBirth.ToString("yyyy-MM-ddTHH:mm:ss") + "\"," +
+                "\"Document\": \"" + signUpViewModel.Document + "\"," +
+                "\"AccountTypeId\": 1 }";
+        var content = new StringContent(bodyContent,
             Encoding.UTF8,
             "application/json");
 
@@ -140,7 +144,7 @@ namespace Web_store.Web.Controllers
             }
             else
             {
-                return RedirectToAction("index");
+                return RedirectToAction("signUp");
             }
         }
     }

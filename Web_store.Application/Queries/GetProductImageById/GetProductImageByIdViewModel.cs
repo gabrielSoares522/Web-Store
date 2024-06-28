@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Web_store.Application.Queries.GetProductImageById
 {
-    internal class GetProductImageByIdViewModel
+    public class GetProductImageByIdViewModel
     {
         public GetProductImageByIdViewModel(int id, byte[] bytesImage, int productId, string imageName,DateTime createAt, DateTime updateAt)
         {

@@ -5,11 +5,11 @@ namespace Web_store.Domain.Data
 {
     public class DataContext: DbContext
     {
-        //private readonly DbContextOptions<DataContext> _options;
+        private readonly DbContextOptions<DataContext> _options;
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            //_options = options;
+            _options = options;
         }
         
         public DbSet<Product> Products { get; set; }
@@ -21,5 +21,6 @@ namespace Web_store.Domain.Data
         public DbSet<OrderItem> OrderItens { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<PaymentType> PaymentTypes { get; set; }
+        public DbSet<Session> Sessions { get; set; }
     }
 }

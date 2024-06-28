@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web_store.Domain.Data;
 
@@ -11,9 +12,10 @@ using Web_store.Domain.Data;
 namespace Web_store.Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240628041006_CriandoTabelaSession")]
+    partial class CriandoTabelaSession
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -440,7 +442,7 @@ namespace Web_store.Domain.Migrations
             modelBuilder.Entity("Web_store.Domain.Entities.Session", b =>
                 {
                     b.HasOne("Web_store.Domain.Entities.User", "User")
-                        .WithMany("Sessions")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -481,11 +483,6 @@ namespace Web_store.Domain.Migrations
             modelBuilder.Entity("Web_store.Domain.Entities.Store", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("Web_store.Domain.Entities.User", b =>
-                {
-                    b.Navigation("Sessions");
                 });
 #pragma warning restore 612, 618
         }

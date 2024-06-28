@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Web_store.Application.Commands.AddProductImage;
 using Web_store.Application.Commands.RemoveProductImage;
 using Web_store.Application.Commands.UpdateProductImage;
-//using Web_store.Application.Queries.GetProductImageById;
-//using Web_store.Application.Queries.GetProductImages;
+using Web_store.Application.Queries.GetProductImageById;
+using Web_store.Application.Queries.GetProductImages;
 
 namespace Web_store.API.Controllers
 {
@@ -22,67 +22,72 @@ namespace Web_store.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProductImage(int idProduct)
         {
-            //var getProductImagesQuery = new GetProductImagesQuery(idProduct);
+            var query = new GetProductImagesQuery(idProduct);
 
-            //var result = await _mediator.Send(getProductImagesQuery);
+            var result = await _mediator.Send(query);
 
-            //return Ok(result);
-            return Ok();
+            return Ok(result);
         }
 
         [HttpGet("{idProductImage}")]
         public async Task<IActionResult> GetProductImageById([FromRoute] int idProductImage)
         {
-            //var getProductImageByIdQuery = new GetProductImageByIdQuery(idProductImage);
+            var query = new GetProductImageByIdQuery(idProductImage);
 
-            //var result = await _mediator.Send(getProductImageByIdQuery);
+            var result = await _mediator.Send(query);
 
-            //return Ok(result);
-            return Ok();
+            return Ok(result);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> AddProductImage([FromBody] AddProductImageInputModel inputModel, IFormFile image)
+        public async Task<IActionResult> AddProductImage([FromBody] AddProductImageInputModel inputModel)//, IFormFile image)
         {
-            byte[] imageBytes = new byte[0];
-            if (image.Length > 0)
-            {
-                using (var ms = new MemoryStream())
-                {
-                    image.CopyTo(ms);
-                    imageBytes = ms.ToArray();
-                }
-            }
+            //byte[] imageBytes = new byte[0];
+            //if (image.Length > 0)
+            //{
+            //    using (var ms = new MemoryStream())
+            //    {
+            //        image.CopyTo(ms);
+            //        imageBytes = ms.ToArray();
+            //    }
+            //}
             
+            var command = new AddProductImageCommand(inputModel.BytesImage, inputModel.ProductId, inputModel.ImageName);
 
-            var addProductImageCommand = new AddProductImageCommand(imageBytes, inputModel.ProductId, image.Name);
-
-            var result = await _mediator.Send(addProductImageCommand);
+            var result = await _mediator.Send(command);
 
             return Ok(result);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateProductImage([FromBody] UpdateProductImageInputModel productImage)
+        public async Task<IActionResult> UpdateProductImage([FromBody] UpdateProductImageInputModel inputModel)//, IFormFile image)
         {
-            //var updateProductImageCommand = new UpdateProductImageCommand(productImage.Id, productImage.Name, productImage.Description, productImage.Value, productImage.Quantity, productImage.IsAvailable, productImage.StoreId);
+            //byte[] imageBytes = new byte[0];
+            //if (image.Length > 0)
+            //{
+            //    using (var ms = new MemoryStream())
+            //    {
+            //        image.CopyTo(ms);
+            //        imageBytes = ms.ToArray();
+            //    }
+            //}
 
-            //var result = await _mediator.Send(updateProductImageCommand);
+            var command = new UpdateProductImageCommand(inputModel.Id, inputModel.BytesImage, inputModel.ProductId, inputModel.ImageName);
 
-            //return Ok(result);
-            return Ok();
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
         }
 
         [HttpDelete("{idProductImage}")]
         public async Task<IActionResult> RemoveProductImage([FromRoute] int idProductImage)
         {
-            //var removeProductImageCommand = new RemoveProductImageCommand(idProductImage);
+            var command = new RemoveProductImageCommand(idProductImage);
 
-            //var result = await _mediator.Send(removeProductImageCommand);
+            var result = await _mediator.Send(command);
 
-            //return Ok(result);
-            return Ok();
+            return Ok(result);
         }
     }
 }

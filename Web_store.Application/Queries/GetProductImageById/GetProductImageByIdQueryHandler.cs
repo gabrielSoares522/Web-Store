@@ -21,8 +21,8 @@ namespace Web_store.Application.Queries.GetProductImageById
             var productImages = _productImageRepository.GetAll();
 
             var getProductByIdViewModel = productImages
-                .Select(s => new GetProductImageByIdViewModel(s.Id, s.BytesImage, s., s., s., s., s.CreatedAt, s.UpdateAt))
-                .FirstOrDefault(s => s.Id == request.IdProduct);
+                .Select(s => new GetProductImageByIdViewModel(s.Id, s.BytesImage, s.ProductId, s.ImageName, s.CreatedAt, s.UpdateAt))
+                .FirstOrDefault(s => s.Id == request.IdProductImage);
 
             return Task.FromResult(getProductByIdViewModel);
         }

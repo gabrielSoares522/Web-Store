@@ -23,6 +23,7 @@ namespace Web_store.Domain.Entities
         public string Document { get; set; }
         public int AccountTypeId { get; set; }
 
+        public List<Session> Sessions { get; set; }
         public User (int id, string firstName, string lastName,string nickName, string email,string password, DateTime dateBirth, string document, int accountTypeId)
         {
             Id = id;

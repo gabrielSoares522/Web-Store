@@ -4,7 +4,7 @@ using Web_store.Application.Commands.AddUser;
 using Web_store.Application.Commands.RemoveUser;
 using Web_store.Application.Commands.UpdateUser;
 using Web_store.Application.Queries.GetUserById;
-using Web_store.Application.Queries.GetUserByLoginPassword;
+using Web_store.Application.Commands.AddSession;
 using Web_store.Application.Queries.GetUsers;
 
 namespace Web_store.API.Controllers
@@ -69,17 +69,13 @@ namespace Web_store.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{login}/{password}")]
-        public async Task<IActionResult> ValidateLogin([FromRoute] string login, [FromRoute] string password)
+        [HttpPost("login")]
+        public async Task<IActionResult> ValidateLogin([FromBody] AddSessionInputModel inputModel)
         {
-            var query = new GetUserByLoginPasswordQuery(login,password);
+            var command = new AddSessionCommand(inputModel.Login,inputModel.Password);
 
-            var result = await _mediator.Send(query);
+            var result = await _mediator.Send(command);
 
-            if(result == null)
-            {
-                return NoContent();
-            }
             return Ok(result);
         }
 

@@ -8,13 +8,13 @@ using Web_store.Application.Queries.GetProductById;
 
 namespace Web_store.Application.Queries.GetProductImageById
 {
-    internal class GetProductImageByIdQuery : IRequest<GetProductImageByIdViewModel>
+    public class GetProductImageByIdQuery : IRequest<GetProductImageByIdViewModel>
     {
-        public GetProductImageByIdQuery(int idProduct)
+        public GetProductImageByIdQuery(int idProductImage)
         {
-            IdProduct = idProduct;
+            IdProductImage = idProductImage;
         }
 
-        public int IdProduct { get; set; }
+        public int IdProductImage { get; set; }
     }
 }
