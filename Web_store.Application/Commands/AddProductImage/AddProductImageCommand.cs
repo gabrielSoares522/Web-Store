@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Web_store.Domain.Entities;
 
 namespace Web_store.Application.Commands.AddProductImage
 {
-    public class AddProductImageCommand : IRequest<Unit>
+    public class AddProductImageCommand : IRequest<ProductImage>
     {
         public AddProductImageCommand(byte[] bytesImage, int productId, string imageName)
         {

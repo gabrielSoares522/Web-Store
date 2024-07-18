@@ -2,12 +2,12 @@
   "profiles": {
     "Web_store.Web": {
       "commandName": "Project",
-      "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7145;http://localhost:5110"
+      "applicationUrl": "https://localhost:7145;http://localhost:5110",
+      "hotReloadEnabled": true
     },
     "IIS Express": {
       "commandName": "IISExpress",

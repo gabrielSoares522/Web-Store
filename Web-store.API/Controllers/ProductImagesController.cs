@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using Web_store.Application.Commands.AddProductImage;
 using Web_store.Application.Commands.RemoveProductImage;
 using Web_store.Application.Commands.UpdateProductImage;
@@ -41,17 +42,26 @@ namespace Web_store.API.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddProductImage([FromBody] AddProductImageInputModel inputModel)//, IFormFile image)
+        public async Task<IActionResult> AddProductImage(AddProductImageInputModel inputModel, IFormFile image)
         {
-            //byte[] imageBytes = new byte[0];
-            //if (image.Length > 0)
-            //{
-            //    using (var ms = new MemoryStream())
-            //    {
-            //        image.CopyTo(ms);
-            //        imageBytes = ms.ToArray();
-            //    }
-            //}
+            byte[] imageBytes = new byte[0];
+            if (image.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    image.CopyTo(ms);
+                    imageBytes = ms.ToArray();
+
+                    const int length = 16;
+                    Random random = new Random();
+                    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                    string imageName = new string(Enumerable.Repeat(chars, length)
+                        .Select(s => s[random.Next(s.Length)]).ToArray());
+                    
+                    inputModel.ImageName = imageName;
+                    inputModel.BytesImage = imageBytes;
+                }
+            }
             
             var command = new AddProductImageCommand(inputModel.BytesImage, inputModel.ProductId, inputModel.ImageName);
 

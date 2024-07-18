@@ -69,7 +69,7 @@ namespace Web_store.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("login")]
+        [HttpPost("validateLogin")]
         public async Task<IActionResult> ValidateLogin([FromBody] AddSessionInputModel inputModel)
         {
             var command = new AddSessionCommand(inputModel.Login,inputModel.Password);

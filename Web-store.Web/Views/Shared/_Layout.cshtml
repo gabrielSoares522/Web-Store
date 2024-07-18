@@ -1,23 +1,52 @@
-﻿<!DOCTYPE html>
+﻿
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<!--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>-->
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Web_store.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!--<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />-->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Web_store.Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/buyer.css" asp-append-version="true" />
+    <!--<link rel="stylesheet" href="~/Web_store.Web.styles.css" asp-append-version="true" />-->
 
-    <style>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    
+    <!--<style>
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
         -webkit-user-select: none;
         -moz-user-select: none;
         user-select: none;
+
+        height: 400px;
       }
 
-</style>
+      html, body{
+        height: 100%;
+      }
+
+        .container-fluid {
+            padding: 10px 120px;
+            /*height: 100%;*/
+            overflow-y: hidden;
+        }
+
+       .products-list{
+           margin:auto;
+           width:1000px;
+           min-height:500px;
+       }
+
+    </style>-->
 </head>
 <body>
     <header>
@@ -49,19 +78,20 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <!--<footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - Web_store.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    </footer>-->
+    <!--<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>-->
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -6,24 +6,25 @@
 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
         @if (Model != null && Model.Any()) {
             foreach (ProductViewModel product in Model) {
-                <div class="col">
-                    <div class="card mb-4 rounded-3 shadow-sm">
-                        <!--<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>-->
-                        <img class="bd-placeholder-img card-img-top" src="/img/611JAHr-1zL._SL1400_.jpg" alt="Alternate Text" />
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <!--<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                    </svg>-->
+                    @{
+                        var imreBase64Data = Convert.ToBase64String(product.BytesImage);
+                        var imgDataURL = String.Format("data:image/png;base64,{0}", imreBase64Data);
+                    }
+                    <img class="bd-placeholder-img card-img-top" src="@imgDataURL" alt="Alternate Text" />
                         <div class="card-header py-3">
                             <h4 class="my-0 fw-normal">
                                 @if (product.Name.Length > 50) {
                                     var treePoints = "...";
                                     @product.Name.Substring(0,47); @treePoints;
                                 }
-                                else
-                                {
-                                    @product.Name
-                                }
+                                else { @product.Name }
                             </h4>
                         </div>
                         <div class="card-body">

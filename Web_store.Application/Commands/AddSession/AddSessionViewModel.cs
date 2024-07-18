@@ -1,6 +1,12 @@
-﻿namespace Web_store.Web.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Web_store.Application.Commands.AddSession
 {
-    public class UserViewModel
+    public class AddSessionViewModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -12,6 +18,6 @@
         public DateTime UpdateAt { get; set; }
         public string Document { get; set; }
         public int AccountTypeId { get; set; }
-        public int SessionId {  get; set; }
+        public int SessionId { get; set; }
     }
 }

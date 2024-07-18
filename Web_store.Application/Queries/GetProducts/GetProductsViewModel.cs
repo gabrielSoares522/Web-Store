@@ -8,7 +8,7 @@ namespace Web_store.Application.Queries.GetProducts
 {
     public class GetProductsViewModel
     {
-        public GetProductsViewModel(int id, string name, string description,double value, int quantity, bool isAvailable, DateTime createdAt, DateTime updateAt)
+        public GetProductsViewModel(int id, string name, string description,double value, int quantity, bool isAvailable, DateTime createdAt, DateTime updateAt, byte[] bytesImage)
         {
             Id = id;
             Name = name;
@@ -18,6 +18,7 @@ namespace Web_store.Application.Queries.GetProducts
             IsAvailable = isAvailable;
             CreatedAt = createdAt;
             UpdateAt = updateAt;
+            BytesImage = bytesImage;
         }
 
         public int Id { get; set; }
@@ -28,5 +29,6 @@ namespace Web_store.Application.Queries.GetProducts
         public bool IsAvailable { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdateAt { get; set; }
+        public byte[] BytesImage { get; set; }
     }
 }

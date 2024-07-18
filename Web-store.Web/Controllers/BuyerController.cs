@@ -47,13 +47,43 @@ namespace Web_store.Web.Controllers
         public IActionResult ProductDetails(int Id)
         {
             ProductViewModel product = new ProductViewModel();
-            product.Id = Id;
-            product.Name = "PLACA DE VÍDEO SAPPHIRE PULSE AMD RADEON RX 7900 XT";
-            product.Description = "\r\nCoprocessador gráfico\tAMD RADEON RX 7900\r\nMarca\tSapphire\r\nTamanho da memória RAM da placa gráfica\t20\r\nVelocidade do clock da GPU\t2075 MHz\r\nInterface de saída de vídeo\tDisplayPort, HDMI";
-            product.Quantity = 50;
-            product.Value = 5379.99;
 
-            return View(product);
+            HttpClient client = new HttpClient();
+            Uri UrlReq = new Uri(domainAPI + "/api/Products/" + Id);
+
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json")
+            );
+
+            var result = client.GetAsync(UrlReq).GetAwaiter().GetResult();
+            var resultContent = result.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+
+            product = JsonConvert.DeserializeObject<ProductViewModel>(resultContent);
+
+            List<ProductImageViewModel> productImages = new List<ProductImageViewModel>();
+
+			HttpClient clientImages = new HttpClient();
+			Uri UrlReqImages = new Uri(domainAPI + "/api/ProductImages?idProduct=" + Id);
+
+			clientImages.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json")
+            );
+
+            result = clientImages.GetAsync(UrlReqImages).GetAwaiter().GetResult();
+            resultContent = result.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+            var productDetail = new ProductDetailsViewModel();
+
+			productDetail.Id = product.Id;
+			productDetail.Name = product.Name;
+			productDetail.Description = product.Description;
+			productDetail.Quantity = product.Quantity;
+			productDetail.Value = product.Value;
+
+			productDetail.Images = JsonConvert.DeserializeObject<List<ProductImageViewModel>>(resultContent);
+
+            return View(productDetail);
         }
 
         [HttpPost]

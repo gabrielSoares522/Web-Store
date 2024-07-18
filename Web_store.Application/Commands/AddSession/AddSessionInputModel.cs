@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Web_store.Application.Commands.AddSession
 {
-    public class AddSessionInputModel : IRequest<Unit>
+    public class AddSessionInputModel : IRequest<int>
     {
         public AddSessionInputModel(string login, string password)
         {

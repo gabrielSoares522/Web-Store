@@ -10,7 +10,7 @@ using Web_store.Domain.Interfaces;
 
 namespace Web_store.Application.Commands.AddSession
 {
-    internal class AddSessionCommandHandler : IRequestHandler<AddSessionCommand, int>
+    internal class AddSessionCommandHandler : IRequestHandler<AddSessionCommand, AddSessionViewModel>
     {
         private readonly IUserRepository _userRepository;
         private readonly ISessionRepository _sessionRepository;
@@ -19,21 +19,35 @@ namespace Web_store.Application.Commands.AddSession
             _userRepository = userRepository;
             _sessionRepository = sessionRepository;
         }
-        public Task<int> Handle(AddSessionCommand request, CancellationToken cancellationToken)
+        public Task<AddSessionViewModel> Handle(AddSessionCommand request, CancellationToken cancellationToken)
         {
             var users = _userRepository.GetAll();
 
-            var getUserByLoginPasswordViewModel = users
-                .Select(s => new GetUserByLoginPasswordViewModel(s.Id, s.FirstName, s.LastName, s.Email, s.Password, s.DateBirth, s.Document, s.AccountTypeId, s.CreatedAt, s.UpdateAt))
+            var loggedUser = users
                 .FirstOrDefault(s => (s.Email == request.Login || s.NickName == request.Login) && s.Password == request.Password);
-            if (getUserByLoginPasswordViewModel != null) {
-                Session newSession = new Session(0, getUserByLoginPasswordViewModel.Id);
+            
+            if (loggedUser != null) {
+                Session newSession = new Session(0, loggedUser.Id);
                 var sessionId = _sessionRepository.Add(newSession);
-                return Task.FromResult(sessionId.Id);
+                AddSessionViewModel result = new AddSessionViewModel()
+                {
+                    Id = loggedUser.Id,
+                    FirstName = loggedUser.FirstName,
+                    LastName = loggedUser.LastName,
+                    NickName = loggedUser.NickName,
+                    Email = loggedUser.Email,
+                    DateBirth = loggedUser.DateBirth,
+                    CreatedAt = loggedUser.CreatedAt,
+                    UpdateAt = loggedUser.UpdateAt,
+                    Document = loggedUser.Document,
+                    AccountTypeId = loggedUser.AccountTypeId,
+                    SessionId = sessionId.Id
+                };
+                return Task.FromResult(result);
             }
             else
             {
-                return Task.FromResult(-1);
+                return Task.FromResult(new AddSessionViewModel() { SessionId = -1 });
             }
         }
     }
